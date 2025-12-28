@@ -1,0 +1,45 @@
+server:
+  port: 9393
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+
+spring:
+  application:
+    name: cred-search
+
+  config:
+    import: optional:file:${CONFIG_CREDENTIALS_FILE_PATH}
+
+  banner:
+    location: banner.txt
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cred-search
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: tiger123
+    hikari:
+      idle-timeout: 600000
+      connection-timeout: 1000
+      maximum-pool-size: 100
+      minimum-idle: 50
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      generate-ddl: false
+      ddl-auto: none
+    properties:
+      hibernate:
+        order_inserts: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 100
+        show_sql: false
+        format_sql: true
+
+logRequestResponse: true
